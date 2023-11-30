@@ -22,22 +22,28 @@ const userNameValidationSchema = z.object({
     address: z.string().min(1),
   });
   
-  export const studentValidationSchema = z.object({
-    id: z.string().min(1),
-    name: userNameValidationSchema,
-    gender: z.enum(['male', 'female', 'other']),
-    dateOfBirth: z.string().optional(),
-    email: z.string().email(),
-    contactNo: z.string().min(1),
-    emergencyContactNo: z.string().min(1),
-    bloodGroup: z.enum(['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-']).optional(),
-    presentAdress: z.string().min(1),
-    parmanentAdress: z.string().min(1),
-    gurdian: gurdianValidationSchema,
-    localGurdian: LocalGurdianValidationSchema,
-    profileImage: z.string().optional(),
-    isActive: z.enum(['active', 'block']).default('active'),
-  });
+  export const createStudentValidationSchema = z.object({
+    body: z.object({
+      
+      student : z.object({
+        name: userNameValidationSchema,
+      gender: z.enum(['male', 'female', 'other']),
+      dateOfBirth: z.date().optional(),
+      email: z.string().email(),
+      contactNo: z.string().min(1),
+      emergencyContactNo: z.string().min(1),
+      bloodGroup: z.enum(['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-']).optional(),
+      presentAdress: z.string().min(1),
+      parmanentAdress: z.string().min(1),
+      gurdian: gurdianValidationSchema,
+      localGurdian: LocalGurdianValidationSchema,
+      profileImage: z.string().optional(),
+      
+      })
+    })
+  })
 
-  export default studentValidationSchema;
+  export const studentValidations = {
+    createStudentValidationSchema,
+  }
   
