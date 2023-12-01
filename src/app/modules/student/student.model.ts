@@ -87,9 +87,9 @@ const studentSchema = new Schema<TStudent, studentModel>({
     type: userNameSchema,
     required: true,
   },
-  user:{
+  user: {
     type: Schema.Types.ObjectId,
-    required: [true,'user id is required'],
+    required: [true, 'user id is required'],
     unique: true,
     ref: 'User',
   },
@@ -106,12 +106,11 @@ const studentSchema = new Schema<TStudent, studentModel>({
     },
     required: true,
   },
-  dateOfBirth: { type: Date },
+  dateOfBirth: { type: String },
   email: {
     type: String,
     required: true,
     unique: true,
-  
   },
   contactNo: { type: String, required: true },
   emergencyContactNo: { type: String, required: true },
@@ -130,7 +129,7 @@ const studentSchema = new Schema<TStudent, studentModel>({
     required: true,
   },
   profileImage: { type: String },
-
+  admissionSemister: { type: Schema.Types.ObjectId, ref: 'AcademicSemister' },
 });
 // creating a custom instance method
 

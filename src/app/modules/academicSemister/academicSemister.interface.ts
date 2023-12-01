@@ -10,3 +10,6 @@ export type TAcademicSemister ={
     starMonth : TMonths,
     endMonth : TMonths
 }
+ export type TacademicSemisterNameCodeMapper = {
+    [key: string]: string;
+  };

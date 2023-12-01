@@ -16,6 +16,47 @@ const createAcademicSemister = catchAsync(async (req, res) => {
   });
 });
 
+const getAllAcademicSemister = catchAsync(async (req, res) => {
+  const result = await AcademicSemisterService.getAllAcademicSemisterFromDB();
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Academic semister is created succesfully',
+    data: result,
+  });
+});
+
+const getSingleAcademicSemister = catchAsync(async (req, res) => {
+  const { semisterId } = req.params;
+  const result =
+    await AcademicSemisterService.getSingleAcademicSemisterFromDB(semisterId);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Academic semister is retrive succesfully',
+    data: result,
+  });
+});
+
+const updateAcademicSemister = catchAsync(async (req, res) => {
+  const { semisterId } = req.params;
+  const result = await AcademicSemisterService.updateAcademicSemisterIntoDB(
+    semisterId,
+    req.body,
+  );
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Academic semister is retrive succesfully',
+    data: result,
+  });
+});
+
 export const AcademicSemisterControllers = {
   createAcademicSemister,
+  getAllAcademicSemister,
+  getSingleAcademicSemister,
+  updateAcademicSemister,
 };

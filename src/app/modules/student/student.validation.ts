@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z, } from 'zod';
 
 const userNameValidationSchema = z.object({
     firstName: z.string().min(1).max(20).trim(),
@@ -28,7 +28,7 @@ const userNameValidationSchema = z.object({
       student : z.object({
         name: userNameValidationSchema,
       gender: z.enum(['male', 'female', 'other']),
-      dateOfBirth: z.date().optional(),
+      dateOfBirth: z.string().optional(),
       email: z.string().email(),
       contactNo: z.string().min(1),
       emergencyContactNo: z.string().min(1),
@@ -38,7 +38,7 @@ const userNameValidationSchema = z.object({
       gurdian: gurdianValidationSchema,
       localGurdian: LocalGurdianValidationSchema,
       profileImage: z.string().optional(),
-      
+      admissionSemister : z.string(),
       })
     })
   })
