@@ -1,6 +1,8 @@
 import { Schema, model, } from "mongoose";
 import { TAcademicSemister, } from "./academicSemister.interface";
 import { AcademicSemisterCode, AcademicSemisterName, Months } from "./academicSemister.constant";
+import AppError from "../../errors/appError";
+import httpStatus from "http-status";
 
 
 
@@ -24,7 +26,7 @@ academicSemisterSchema.pre('save', async function(next) {
     })
 
     if(isSemisterExists){
-        throw new Error("semister is already exists")
+        throw new AppError(httpStatus.NOT_FOUND,"semister is already exists")
     }else{
         next()
     }

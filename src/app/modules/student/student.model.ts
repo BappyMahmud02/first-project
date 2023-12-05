@@ -81,56 +81,72 @@ const LocalGurdianSchema = new Schema<TLocalGurdian>({
   },
 });
 
-const studentSchema = new Schema<TStudent, studentModel>({
-  id: { type: String, required: true, unique: true },
-  name: {
-    type: userNameSchema,
-    required: true,
-  },
-  user: {
-    type: Schema.Types.ObjectId,
-    required: [true, 'user id is required'],
-    unique: true,
-    ref: 'User',
-  },
-  // password: {
-  //   type: String,
-  //   required: [true,'password is required'],
-  //   maxlength:[20,'password can not be more than 20']
-  // },
-  gender: {
-    type: String,
-    enum: {
-      values: ['male', 'female', 'other'],
-      message: '{VALUE} is not valid',
+const studentSchema = new Schema<TStudent, studentModel>(
+  {
+    id: { type: String, required: true, unique: true },
+    name: {
+      type: userNameSchema,
+      required: true,
     },
-    required: true,
+    user: {
+      type: Schema.Types.ObjectId,
+      required: [true, 'user id is required'],
+      unique: true,
+      ref: 'User',
+    },
+
+    gender: {
+      type: String,
+      enum: {
+        values: ['male', 'female', 'other'],
+        message: '{VALUE} is not valid',
+      },
+      required: true,
+    },
+    dateOfBirth: { type: String },
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    contactNo: { type: String, required: true },
+    emergencyContactNo: { type: String, required: true },
+    bloodGroup: {
+      type: String,
+      enum: ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'],
+    },
+    presentAdress: { type: String, required: true },
+    parmanentAdress: { type: String, required: true },
+    gurdian: {
+      type: gurdianSchema,
+      required: true,
+    },
+    localGurdian: {
+      type: LocalGurdianSchema,
+      required: true,
+    },
+    profileImage: { type: String },
+    admissionSemister: { type: Schema.Types.ObjectId, ref: 'AcademicSemister' },
+
+    isDeleted: {
+      type: Boolean,
+      default: false,
+    },
+    academicDepartment: {
+      type: Schema.Types.ObjectId,
+      ref: 'AcademicDepartment',
+    },
   },
-  dateOfBirth: { type: String },
-  email: {
-    type: String,
-    required: true,
-    unique: true,
+  
+  {
+    toJSON: { virtuals: true },
   },
-  contactNo: { type: String, required: true },
-  emergencyContactNo: { type: String, required: true },
-  bloodGroup: {
-    type: String,
-    enum: ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'],
-  },
-  presentAdress: { type: String, required: true },
-  parmanentAdress: { type: String, required: true },
-  gurdian: {
-    type: gurdianSchema,
-    required: true,
-  },
-  localGurdian: {
-    type: LocalGurdianSchema,
-    required: true,
-  },
-  profileImage: { type: String },
-  admissionSemister: { type: Schema.Types.ObjectId, ref: 'AcademicSemister' },
-});
+);
+studentSchema.statics.isUserExists = async function (id: string) {
+  const existingUser = await Student.findOne({ id });
+  return existingUser;
+};
+
 // creating a custom instance method
 
 export const Student = model<TStudent>('Student', studentSchema);
